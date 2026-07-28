@@ -1,0 +1,501 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Loading lab — Zhaoxin Feng</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css?v=14">
+  <style>
+    .lab-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+      margin-top: 32px;
+    }
+    @media (max-width: 720px) {
+      .lab-grid { grid-template-columns: 1fr; }
+    }
+    .lab-card {
+      border: 1px solid var(--rule);
+      border-radius: 6px;
+      padding: 28px 24px 24px;
+      background: var(--bg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+    .lab-card .stage {
+      width: 100%;
+      height: 240px;
+      background: var(--bg-soft);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+    .lab-card .stage svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    .lab-card h3 {
+      font-family: var(--f-display);
+      font-size: 19px;
+      font-weight: 600;
+      margin: 8px 0 0;
+      color: var(--ink);
+      letter-spacing: -0.005em;
+    }
+    .lab-card .tag {
+      font-family: var(--f-mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+    }
+    .lab-card .desc {
+      font-family: var(--f-body);
+      font-size: 14.5px;
+      line-height: 1.55;
+      color: var(--ink-soft);
+      text-align: center;
+      max-width: 34ch;
+      font-style: italic;
+    }
+    .lab-card .replay {
+      font-family: var(--f-mono);
+      font-size: 11px;
+      color: var(--accent);
+      background: none;
+      border: 1px solid var(--accent-soft);
+      padding: 6px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      margin-top: 6px;
+      transition: all .2s;
+    }
+    .lab-card .replay:hover {
+      background: var(--accent-bg);
+    }
+
+    .actor-line {
+      stroke: var(--ink);
+      stroke-width: 1.5;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .actor-fill { fill: var(--ink); }
+    .accent-stroke {
+      stroke: var(--accent);
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .accent-fill { fill: var(--accent); }
+
+    /* breathing — subtle, makes actors feel alive */
+    .breathe-human { animation: breathe 3.2s ease-in-out infinite; transform-origin: 75px 150px; }
+    .breathe-robot { animation: breathe 3.2s ease-in-out infinite; animation-delay: 0.15s; transform-origin: 225px 150px; }
+    @keyframes breathe {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-1.5px); }
+    }
+
+    /* =================== B: DATA PACKETS =================== */
+    .anim-b .packet { opacity: 0; }
+    .anim-b .p1 { animation: b-send 4s ease-in-out infinite; }
+    .anim-b .p2 { animation: b-reply 4s ease-in-out infinite; animation-delay: 1.3s; }
+    .anim-b .p3 { animation: b-send 4s ease-in-out infinite; animation-delay: 2.6s; }
+
+    .anim-b .beam {
+      stroke-dasharray: 140;
+      stroke-dashoffset: 140;
+      opacity: 0;
+      animation: b-beam 4s ease-out infinite;
+      animation-delay: 3.3s;
+    }
+    .anim-b .beam-glow {
+      opacity: 0;
+      animation: b-beam-glow 4s ease-in-out infinite;
+      animation-delay: 3.5s;
+    }
+    .anim-b .human-head-b { animation: b-nod 4s ease-in-out infinite; transform-origin: 75px 75px; }
+    .anim-b .robot-led-b { animation: b-led 4s ease-in-out infinite; }
+    .anim-b .robot-eye-l { animation: b-eye 4s ease-in-out infinite; transform-origin: 220px 73px; }
+    .anim-b .robot-eye-r { animation: b-eye 4s ease-in-out infinite; transform-origin: 230px 73px; }
+
+    @keyframes b-send {
+      0% { opacity: 0; transform: translate(0, 0) scale(0.5); }
+      6% { opacity: 1; transform: translate(0, 0) scale(1); }
+      22% { opacity: 1; transform: translate(60px, -10px) scale(1); }
+      38% { opacity: 1; transform: translate(125px, 0) scale(1); }
+      46% { opacity: 0; transform: translate(125px, 0) scale(0.6); }
+      100% { opacity: 0; transform: translate(125px, 0) scale(0.6); }
+    }
+    @keyframes b-reply {
+      0% { opacity: 0; transform: translate(125px, 0) scale(0.5); }
+      6% { opacity: 1; transform: translate(125px, 0) scale(1); }
+      22% { opacity: 1; transform: translate(62px, -10px) scale(1); }
+      38% { opacity: 1; transform: translate(0, 0) scale(1); }
+      46% { opacity: 0; transform: translate(0, 0) scale(0.6); }
+      100% { opacity: 0; transform: translate(0, 0) scale(0.6); }
+    }
+    @keyframes b-beam {
+      0% { opacity: 0; stroke-dashoffset: 140; }
+      30% { opacity: 1; stroke-dashoffset: 0; }
+      92% { opacity: 1; stroke-dashoffset: 0; }
+      100% { opacity: 0; stroke-dashoffset: 0; }
+    }
+    @keyframes b-beam-glow {
+      0%, 100% { opacity: 0; }
+      40% { opacity: 0.35; }
+      80% { opacity: 0.15; }
+    }
+    @keyframes b-nod {
+      0%, 92%, 100% { transform: rotate(0deg); }
+      94%, 97% { transform: rotate(-5deg); }
+    }
+    @keyframes b-led {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+    @keyframes b-eye {
+      0%, 88%, 100% { transform: scaleY(1); }
+      92%, 94% { transform: scaleY(0.15); }
+    }
+
+    /* =================== C: IDEA SWAP =================== */
+    .anim-c .bulb {
+      animation: c-bulb 4.5s ease-in-out infinite;
+      transform-box: fill-box;
+    }
+    .anim-c .gear {
+      animation: c-gear 4.5s ease-in-out infinite;
+      transform-box: fill-box;
+    }
+    .anim-c .glow-human {
+      opacity: 0;
+      animation: c-glow 4.5s ease-in-out infinite;
+      animation-delay: 2.9s;
+      transform-box: fill-box;
+      transform-origin: center;
+    }
+    .anim-c .glow-robot {
+      opacity: 0;
+      animation: c-glow 4.5s ease-in-out infinite;
+      animation-delay: 2.9s;
+      transform-box: fill-box;
+      transform-origin: center;
+    }
+
+    @keyframes c-bulb {
+      0% { transform: translate(0, 0); opacity: 0; }
+      10% { transform: translate(0, -4px); opacity: 1; }
+      25% { transform: translate(30px, -14px); opacity: 1; }
+      50% { transform: translate(80px, -16px); opacity: 1; }
+      75% { transform: translate(130px, -14px); opacity: 1; }
+      88% { transform: translate(160px, -4px); opacity: 1; }
+      94% { transform: translate(160px, 0); opacity: 0; }
+      100% { transform: translate(160px, 0); opacity: 0; }
+    }
+    @keyframes c-gear {
+      0% { transform: translate(0, 0) rotate(0deg); opacity: 0; }
+      10% { transform: translate(0, -4px) rotate(20deg); opacity: 1; }
+      25% { transform: translate(-30px, -14px) rotate(90deg); opacity: 1; }
+      50% { transform: translate(-80px, -16px) rotate(180deg); opacity: 1; }
+      75% { transform: translate(-130px, -14px) rotate(270deg); opacity: 1; }
+      88% { transform: translate(-160px, -4px) rotate(340deg); opacity: 1; }
+      94% { transform: translate(-160px, 0) rotate(360deg); opacity: 0; }
+      100% { transform: translate(-160px, 0) rotate(360deg); opacity: 0; }
+    }
+    @keyframes c-glow {
+      0%, 100% { opacity: 0; transform: scale(0.7); }
+      15% { opacity: 0.6; transform: scale(1); }
+      45% { opacity: 0.15; transform: scale(1.25); }
+      70% { opacity: 0; transform: scale(1.35); }
+    }
+
+    .stage.replay-flash { animation: replay-flash 0.3s ease-out; }
+    @keyframes replay-flash {
+      from { background: var(--accent-bg); }
+      to { background: var(--bg-soft); }
+    }
+
+    .lab-notes {
+      margin-top: 56px;
+      padding: 28px 32px;
+      background: var(--bg-soft);
+      border-radius: 6px;
+      border: 1px solid var(--rule);
+    }
+    .lab-notes h3 {
+      font-family: var(--f-display);
+      font-size: 16px;
+      font-weight: 600;
+      margin: 0 0 10px;
+    }
+    .lab-notes p {
+      font-family: var(--f-body);
+      font-size: 14.5px;
+      line-height: 1.6;
+      color: var(--ink-soft);
+      margin: 0;
+    }
+  </style>
+</head>
+<body data-screen-label="99 Loading Lab">
+<div data-nav="about"></div>
+
+<main class="wrap">
+
+  <section style="padding-top:56px;padding-bottom:8px;">
+    <h2 class="sec">Loading lab · v2</h2>
+    <p class="body-text" style="max-width:640px;">
+      Two refined candidates. Both explore the <em>human ↔ LLM</em>
+      relationship — one through exchange, one through learning.
+      Click <em>replay</em> to re-watch.
+    </p>
+  </section>
+
+  <div class="lab-grid">
+
+    <!-- ============================================================
+         B: DATA PACKETS
+         ============================================================ -->
+    <div class="lab-card">
+      <div class="stage" id="stage-b">
+        <svg viewBox="0 0 300 180" class="anim-b" id="svg-b">
+          <!-- floor -->
+          <line x1="40" y1="152" x2="260" y2="152" stroke="var(--rule)" stroke-width="1" stroke-dasharray="2 4"/>
+
+          <!-- ===== HUMAN ===== -->
+          <g class="breathe-human">
+            <g class="human-head-b">
+              <!-- hair (a soft cap) -->
+              <path d="M 64 72 Q 64 58 75 58 Q 86 58 86 72" class="actor-line"/>
+              <!-- head -->
+              <circle cx="75" cy="75" r="12" class="actor-line"/>
+              <!-- eyes -->
+              <circle cx="71" cy="75" r="1.3" class="actor-fill"/>
+              <circle cx="79" cy="75" r="1.3" class="actor-fill"/>
+              <!-- gentle smile -->
+              <path d="M 71 81 Q 75 83 79 81" class="actor-line" style="stroke-width:1.2"/>
+            </g>
+            <!-- neck -->
+            <line x1="75" y1="87" x2="75" y2="94" class="actor-line"/>
+            <!-- shoulders -->
+            <path d="M 60 100 Q 75 94 90 100" class="actor-line"/>
+            <!-- body -->
+            <path d="M 60 100 L 58 135 L 92 135 L 90 100" class="actor-line"/>
+            <!-- legs -->
+            <line x1="68" y1="135" x2="66" y2="152" class="actor-line"/>
+            <line x1="82" y1="135" x2="84" y2="152" class="actor-line"/>
+            <!-- arms -->
+            <line x1="60" y1="101" x2="52" y2="122" class="actor-line"/>
+            <line x1="90" y1="101" x2="97" y2="118" class="actor-line"/>
+          </g>
+
+          <!-- ===== ROBOT ===== -->
+          <g class="breathe-robot">
+            <!-- antenna + bulb -->
+            <line x1="225" y1="60" x2="225" y2="50" class="actor-line"/>
+            <circle cx="225" cy="48" r="3" class="accent-fill"/>
+            <circle cx="225" cy="48" r="5.5" class="accent-stroke" stroke-width="0.8" opacity="0.3"/>
+            <!-- head -->
+            <rect x="210" y="60" width="30" height="28" rx="5" class="actor-line"/>
+            <!-- visor panel -->
+            <rect x="214" y="68" width="22" height="11" rx="2" class="actor-line" style="stroke-width:1"/>
+            <!-- eyes -->
+            <circle cx="220" cy="73" r="1.5" class="actor-fill robot-eye-l"/>
+            <circle cx="230" cy="73" r="1.5" class="actor-fill robot-eye-r"/>
+            <!-- chin line -->
+            <line x1="216" y1="85" x2="234" y2="85" class="actor-line" style="stroke-width:0.8; opacity:0.4"/>
+            <!-- neck -->
+            <line x1="225" y1="88" x2="225" y2="94" class="actor-line"/>
+            <!-- body -->
+            <rect x="213" y="94" width="24" height="34" rx="3" class="actor-line"/>
+            <!-- chest LED -->
+            <circle cx="225" cy="105" r="2.8" class="accent-fill robot-led-b"/>
+            <!-- panel line -->
+            <line x1="213" y1="114" x2="237" y2="114" class="actor-line" style="stroke-width:0.8; opacity:0.5"/>
+            <!-- arms (jointed) -->
+            <line x1="213" y1="100" x2="206" y2="112" class="actor-line"/>
+            <line x1="206" y1="112" x2="204" y2="124" class="actor-line"/>
+            <line x1="237" y1="100" x2="244" y2="112" class="actor-line"/>
+            <line x1="244" y1="112" x2="246" y2="124" class="actor-line"/>
+            <!-- legs -->
+            <line x1="219" y1="128" x2="217" y2="150" class="actor-line"/>
+            <line x1="231" y1="128" x2="233" y2="150" class="actor-line"/>
+            <!-- foot plates -->
+            <line x1="213" y1="152" x2="222" y2="152" class="actor-line"/>
+            <line x1="228" y1="152" x2="237" y2="152" class="actor-line"/>
+          </g>
+
+          <!-- beam -->
+          <line x1="98" y1="92" x2="202" y2="92" class="accent-stroke beam" stroke-width="1.5"/>
+          <line x1="98" y1="92" x2="202" y2="92" class="accent-stroke beam-glow" stroke-width="5" opacity="0.15"/>
+
+          <!-- packets -->
+          <g class="packet p1" style="transform-box: fill-box; transform-origin: 99px 92px;">
+            <rect x="93" y="86" width="12" height="12" rx="2" class="accent-stroke" fill="var(--bg)" stroke-width="1.4"/>
+            <circle cx="99" cy="92" r="1.5" class="accent-fill"/>
+          </g>
+          <g class="packet p2" style="transform-box: fill-box; transform-origin: 99px 92px;">
+            <rect x="93" y="86" width="12" height="12" rx="2" class="accent-stroke" fill="var(--bg)" stroke-width="1.4"/>
+            <circle cx="96" cy="90" r="1.2" class="accent-fill"/>
+            <circle cx="102" cy="90" r="1.2" class="accent-fill"/>
+            <circle cx="99" cy="95" r="1.2" class="accent-fill"/>
+          </g>
+          <g class="packet p3" style="transform-box: fill-box; transform-origin: 99px 92px;">
+            <rect x="93" y="86" width="12" height="12" rx="2" class="accent-stroke" fill="var(--bg)" stroke-width="1.4"/>
+            <line x1="96" y1="90" x2="102" y2="90" class="accent-stroke" stroke-width="1"/>
+            <line x1="96" y1="93" x2="102" y2="93" class="accent-stroke" stroke-width="1"/>
+          </g>
+        </svg>
+      </div>
+      <span class="tag">B · Exchange</span>
+      <h3>Packets back &amp; forth</h3>
+      <p class="desc">A quiet back-and-forth, ending in a channel that stays lit between them.</p>
+      <button class="replay" data-replay="b">↻ replay</button>
+    </div>
+
+    <!-- ============================================================
+         C: IDEA SWAP
+         ============================================================ -->
+    <div class="lab-card">
+      <div class="stage" id="stage-c">
+        <svg viewBox="0 0 300 180" class="anim-c" id="svg-c">
+          <line x1="40" y1="152" x2="260" y2="152" stroke="var(--rule)" stroke-width="1" stroke-dasharray="2 4"/>
+
+          <!-- ===== HUMAN ===== -->
+          <g class="breathe-human">
+            <!-- arrival glow ring -->
+            <circle cx="75" cy="85" r="20" class="accent-stroke glow-human" stroke-width="1.3"/>
+            <!-- hair -->
+            <path d="M 64 82 Q 64 68 75 68 Q 86 68 86 82" class="actor-line"/>
+            <!-- head -->
+            <circle cx="75" cy="85" r="12" class="actor-line"/>
+            <!-- eyes -->
+            <circle cx="71" cy="85" r="1.3" class="actor-fill"/>
+            <circle cx="79" cy="85" r="1.3" class="actor-fill"/>
+            <!-- smile -->
+            <path d="M 71 91 Q 75 93 79 91" class="actor-line" style="stroke-width:1.2"/>
+            <!-- body -->
+            <line x1="75" y1="97" x2="75" y2="104" class="actor-line"/>
+            <path d="M 60 110 Q 75 104 90 110" class="actor-line"/>
+            <path d="M 60 110 L 58 140 L 92 140 L 90 110" class="actor-line"/>
+            <line x1="68" y1="140" x2="66" y2="152" class="actor-line"/>
+            <line x1="82" y1="140" x2="84" y2="152" class="actor-line"/>
+            <line x1="60" y1="111" x2="52" y2="128" class="actor-line"/>
+            <line x1="90" y1="111" x2="97" y2="126" class="actor-line"/>
+          </g>
+
+          <!-- ===== ROBOT ===== -->
+          <g class="breathe-robot">
+            <!-- arrival glow (rounded rect behind head) -->
+            <rect x="203" y="63" width="44" height="40" rx="8" class="accent-stroke glow-robot" stroke-width="1.3"/>
+            <!-- antenna -->
+            <line x1="225" y1="70" x2="225" y2="60" class="actor-line"/>
+            <circle cx="225" cy="58" r="3" class="accent-fill"/>
+            <!-- head -->
+            <rect x="210" y="70" width="30" height="28" rx="5" class="actor-line"/>
+            <rect x="214" y="78" width="22" height="11" rx="2" class="actor-line" style="stroke-width:1"/>
+            <circle cx="220" cy="83" r="1.5" class="actor-fill"/>
+            <circle cx="230" cy="83" r="1.5" class="actor-fill"/>
+            <line x1="216" y1="95" x2="234" y2="95" class="actor-line" style="stroke-width:0.8; opacity:0.4"/>
+            <!-- neck + body -->
+            <line x1="225" y1="98" x2="225" y2="104" class="actor-line"/>
+            <rect x="213" y="104" width="24" height="34" rx="3" class="actor-line"/>
+            <circle cx="225" cy="115" r="2.8" class="accent-fill"/>
+            <line x1="213" y1="124" x2="237" y2="124" class="actor-line" style="stroke-width:0.8; opacity:0.5"/>
+            <line x1="213" y1="110" x2="206" y2="122" class="actor-line"/>
+            <line x1="206" y1="122" x2="204" y2="134" class="actor-line"/>
+            <line x1="237" y1="110" x2="244" y2="122" class="actor-line"/>
+            <line x1="244" y1="122" x2="246" y2="134" class="actor-line"/>
+            <line x1="219" y1="138" x2="217" y2="150" class="actor-line"/>
+            <line x1="231" y1="138" x2="233" y2="150" class="actor-line"/>
+            <line x1="213" y1="152" x2="222" y2="152" class="actor-line"/>
+            <line x1="228" y1="152" x2="237" y2="152" class="actor-line"/>
+          </g>
+
+          <!-- BULB (human side → robot side) -->
+          <g class="bulb" style="transform-origin: 75px 50px;">
+            <!-- glass -->
+            <path d="M 69 44 Q 69 34 75 34 Q 81 34 81 44 Q 81 48 78 51 L 72 51 Q 69 48 69 44 Z"
+                  class="accent-stroke" fill="var(--bg)" stroke-width="1.4"/>
+            <line x1="72" y1="52" x2="78" y2="52" class="accent-stroke" stroke-width="1.2"/>
+            <line x1="73" y1="54" x2="77" y2="54" class="accent-stroke" stroke-width="1.2"/>
+            <path d="M 73 42 Q 75 46 77 42" class="accent-stroke" stroke-width="0.8"/>
+            <!-- sparks -->
+            <line x1="62" y1="38" x2="66" y2="40" class="accent-stroke" stroke-width="0.8"/>
+            <line x1="88" y1="38" x2="84" y2="40" class="accent-stroke" stroke-width="0.8"/>
+            <line x1="75" y1="26" x2="75" y2="30" class="accent-stroke" stroke-width="0.8"/>
+          </g>
+
+          <!-- GEAR (robot side → human side) -->
+          <g class="gear" style="transform-origin: 235px 50px;">
+            <g transform="translate(235 50)">
+              <circle r="8" class="accent-stroke" fill="var(--bg)" stroke-width="1.4"/>
+              <circle r="2.8" class="accent-fill"/>
+              <rect x="-1.3" y="-11.5" width="2.6" height="3.5" class="accent-fill"/>
+              <rect x="-1.3" y="8" width="2.6" height="3.5" class="accent-fill"/>
+              <rect x="-11.5" y="-1.3" width="3.5" height="2.6" class="accent-fill"/>
+              <rect x="8" y="-1.3" width="3.5" height="2.6" class="accent-fill"/>
+              <g transform="rotate(45)">
+                <rect x="-1.3" y="-11.5" width="2.6" height="3.5" class="accent-fill"/>
+                <rect x="-1.3" y="8" width="2.6" height="3.5" class="accent-fill"/>
+                <rect x="-11.5" y="-1.3" width="3.5" height="2.6" class="accent-fill"/>
+                <rect x="8" y="-1.3" width="3.5" height="2.6" class="accent-fill"/>
+              </g>
+            </g>
+          </g>
+        </svg>
+      </div>
+      <span class="tag">C · Idea swap</span>
+      <h3>Trading minds</h3>
+      <p class="desc">A spark of intuition and a cog of structure cross paths — each takes the other's shape.</p>
+      <button class="replay" data-replay="c">↻ replay</button>
+    </div>
+
+  </div>
+
+  <div class="lab-notes">
+    <h3>Pick one</h3>
+    <p>
+      Once you pick, I'll miniaturize the chosen animation and tuck it into
+      the hero so it plays once on first visit, then fades into your photo.
+    </p>
+  </div>
+
+</main>
+
+<footer>
+  <div class="sig">— Zhaoxin</div>
+  <div>&copy; <span data-year></span> · lab</div>
+</footer>
+
+<script src="assets/site.js?v=6"></script>
+<script>
+  document.querySelectorAll('.replay').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const which = btn.dataset.replay;
+      const svg = document.getElementById('svg-' + which);
+      const cls = 'anim-' + which;
+      const stage = document.getElementById('stage-' + which);
+      svg.classList.remove(cls);
+      stage.classList.remove('replay-flash');
+      void svg.offsetWidth;
+      svg.classList.add(cls);
+      stage.classList.add('replay-flash');
+    });
+  });
+</script>
+</body>
+</html>

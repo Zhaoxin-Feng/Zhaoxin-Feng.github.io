@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Zhaoxin Feng — About</title>
+  <meta name="description" content="Zhaoxin (Betty) Feng — PhD student in Computational Linguistics at The Hong Kong Polytechnic University.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css?v=14">
+</head>
+<body data-screen-label="01 About">
+
+<!-- ============================================================
+     SITE LOADER — idea swap (plays once per session)
+     ============================================================ -->
+<div id="site-loader" aria-hidden="true">
+  <div class="loader-stage">
+    <svg viewBox="0 0 300 180" preserveAspectRatio="xMidYMid meet">
+      <!-- floor hint -->
+      <line x1="50" y1="152" x2="250" y2="152" stroke="var(--rule)" stroke-width="1" stroke-dasharray="2 4"/>
+
+      <!-- floor line -->
+      <line x1="35" y1="154" x2="265" y2="154" class="ldr-floor"/>
+
+      <!-- ground spot under each actor -->
+      <ellipse cx="75" cy="153" rx="18" ry="2.5" fill="var(--ink)" opacity="0.06" class="ldr-spot"/>
+      <ellipse cx="225" cy="153" rx="20" ry="2.5" fill="var(--ink)" opacity="0.06" class="ldr-spot"/>
+
+      <!-- ============= HUMAN ============= -->
+      <g class="ldr-human-group">
+        <g class="ldr-tilt-h">
+          <!-- arrival glow -->
+          <circle cx="75" cy="85" r="22" class="ldr-acc-stroke ldr-glow-h" stroke-width="1.3"/>
+          <circle cx="75" cy="85" r="14" class="ldr-acc-stroke ldr-glow-h delay2" stroke-width="1" opacity="0.5"/>
+
+          <!-- hair -->
+          <path d="M 63 82 Q 63 66 75 66 Q 87 66 87 82" class="ldr-line"/>
+          <!-- hair strand detail -->
+          <path d="M 67 70 Q 70 64 75 64" class="ldr-line" style="stroke-width:1"/>
+          <!-- head -->
+          <circle cx="75" cy="85" r="12.5" class="ldr-line"/>
+          <!-- ear -->
+          <path d="M 63 86 Q 61 86 61 89 Q 61 92 63 92" class="ldr-line" style="stroke-width:1.1"/>
+          <!-- eyes -->
+          <circle cx="70.5" cy="84.5" r="1.3" class="ldr-fill"/>
+          <circle cx="79.5" cy="84.5" r="1.3" class="ldr-fill"/>
+          <!-- brows (lift during 'curious' beat) -->
+          <g class="ldr-brow-lift">
+            <path d="M 67 80 L 73 79" class="ldr-line" style="stroke-width:1"/>
+            <path d="M 77 79 L 83 80" class="ldr-line" style="stroke-width:1"/>
+          </g>
+          <!-- smile -->
+          <path d="M 71 91 Q 75 93.5 79 91" class="ldr-line" style="stroke-width:1.2"/>
+          <!-- neck -->
+          <line x1="75" y1="97.5" x2="75" y2="105" class="ldr-line"/>
+          <!-- collar -->
+          <path d="M 68 106 Q 75 104 82 106" class="ldr-line" style="stroke-width:1.1"/>
+          <!-- shoulders + body -->
+          <path d="M 58 113 Q 75 105 92 113" class="ldr-line"/>
+          <path d="M 58 113 L 56 140 L 94 140 L 92 113" class="ldr-line"/>
+          <!-- body seam -->
+          <line x1="75" y1="113" x2="75" y2="140" class="ldr-line" style="stroke-width:0.8; opacity:0.4"/>
+          <!-- legs -->
+          <line x1="67" y1="140" x2="65" y2="152" class="ldr-line"/>
+          <line x1="83" y1="140" x2="85" y2="152" class="ldr-line"/>
+          <!-- arms -->
+          <line x1="58" y1="114" x2="50" y2="130" class="ldr-line"/>
+          <line x1="92" y1="114" x2="99" y2="128" class="ldr-line"/>
+        </g>
+      </g>
+
+      <!-- ============= ROBOT ============= -->
+      <g class="ldr-robot-group">
+        <g class="ldr-tilt-r">
+          <!-- arrival glow (rounded rect around head) -->
+          <rect x="201" y="62" width="48" height="42" rx="9" class="ldr-acc-stroke ldr-glow-r" stroke-width="1.3"/>
+          <rect x="209" y="70" width="32" height="26" rx="5" class="ldr-acc-stroke ldr-glow-r delay2" stroke-width="1" opacity="0.5"/>
+
+          <!-- antenna -->
+          <line x1="225" y1="70" x2="225" y2="58" class="ldr-line"/>
+          <circle cx="225" cy="56" r="3.2" class="ldr-acc-fill"/>
+          <circle cx="225" cy="56" r="5.5" class="ldr-acc-stroke ldr-antenna-pulse" stroke-width="0.8" opacity="0.35"/>
+
+          <!-- head -->
+          <rect x="210" y="70" width="30" height="28" rx="5" class="ldr-line"/>
+          <!-- visor panel -->
+          <rect x="214" y="78" width="22" height="11" rx="2" class="ldr-line" style="stroke-width:1"/>
+          <!-- eyes -->
+          <circle cx="220" cy="83.5" r="1.6" class="ldr-fill"/>
+          <circle cx="230" cy="83.5" r="1.6" class="ldr-fill"/>
+          <!-- eye highlights -->
+          <circle cx="220.5" cy="83" r="0.5" fill="var(--bg)"/>
+          <circle cx="230.5" cy="83" r="0.5" fill="var(--bg)"/>
+          <!-- speaker grille -->
+          <line x1="218" y1="94" x2="232" y2="94" class="ldr-line" style="stroke-width:0.8; opacity:0.45"/>
+          <line x1="220" y1="96" x2="230" y2="96" class="ldr-line" style="stroke-width:0.8; opacity:0.35"/>
+          <!-- side bolts -->
+          <circle cx="211.5" cy="84" r="1" class="ldr-line"/>
+          <circle cx="238.5" cy="84" r="1" class="ldr-line"/>
+          <!-- neck -->
+          <line x1="225" y1="98" x2="225" y2="104" class="ldr-line"/>
+          <!-- body -->
+          <rect x="212" y="104" width="26" height="36" rx="3" class="ldr-line"/>
+          <!-- chest LED -->
+          <circle cx="225" cy="115" r="3" class="ldr-acc-fill"/>
+          <circle cx="225" cy="115" r="5" class="ldr-acc-stroke" stroke-width="0.6" opacity="0.4"/>
+          <!-- panel line -->
+          <line x1="213" y1="124" x2="237" y2="124" class="ldr-line" style="stroke-width:0.8; opacity:0.5"/>
+          <!-- small dials -->
+          <circle cx="218" cy="132" r="1.5" class="ldr-line" style="stroke-width:0.8"/>
+          <circle cx="225" cy="132" r="1.5" class="ldr-line" style="stroke-width:0.8"/>
+          <circle cx="232" cy="132" r="1.5" class="ldr-line" style="stroke-width:0.8"/>
+          <!-- arms (jointed) -->
+          <line x1="212" y1="110" x2="204" y2="122" class="ldr-line"/>
+          <circle cx="204" cy="122" r="1.5" class="ldr-line" style="stroke-width:1"/>
+          <line x1="204" y1="122" x2="202" y2="134" class="ldr-line"/>
+          <line x1="238" y1="110" x2="246" y2="122" class="ldr-line"/>
+          <circle cx="246" cy="122" r="1.5" class="ldr-line" style="stroke-width:1"/>
+          <line x1="246" y1="122" x2="248" y2="134" class="ldr-line"/>
+          <!-- legs with knee joints -->
+          <line x1="219" y1="140" x2="218" y2="148" class="ldr-line"/>
+          <circle cx="218" cy="148" r="1.2" class="ldr-line" style="stroke-width:1"/>
+          <line x1="218" y1="148" x2="217" y2="152" class="ldr-line"/>
+          <line x1="231" y1="140" x2="232" y2="148" class="ldr-line"/>
+          <circle cx="232" cy="148" r="1.2" class="ldr-line" style="stroke-width:1"/>
+          <line x1="232" y1="148" x2="233" y2="152" class="ldr-line"/>
+          <!-- foot plates -->
+          <line x1="212" y1="152" x2="222" y2="152" class="ldr-line"/>
+          <line x1="228" y1="152" x2="238" y2="152" class="ldr-line"/>
+        </g>
+      </g>
+
+      <!-- final connecting thread between them (appears near end) -->
+      <path d="M 90 95 Q 150 72 210 95" class="ldr-acc-stroke ldr-thread" stroke-width="1.2" fill="none"/>
+
+      <!-- ============= BULB (human → robot) ============= -->
+      <g class="ldr-bulb" style="transform-origin: 75px 50px;">
+        <!-- trail behind bulb -->
+        <g class="ldr-bulb-trail">
+          <circle cx="70" cy="54" r="1.2" class="ldr-acc-fill" opacity="0.4"/>
+          <circle cx="65" cy="56" r="0.8" class="ldr-acc-fill" opacity="0.25"/>
+          <circle cx="60" cy="58" r="0.6" class="ldr-acc-fill" opacity="0.15"/>
+        </g>
+        <!-- glass -->
+        <path d="M 68 43 Q 68 32 75 32 Q 82 32 82 43 Q 82 48 79 51 L 71 51 Q 68 48 68 43 Z"
+              class="ldr-acc-stroke" fill="var(--bg)" stroke-width="1.5"/>
+        <!-- base -->
+        <line x1="71" y1="52.5" x2="79" y2="52.5" class="ldr-acc-stroke" stroke-width="1.2"/>
+        <line x1="72" y1="54.5" x2="78" y2="54.5" class="ldr-acc-stroke" stroke-width="1.2"/>
+        <!-- filament (flickers on ignition) -->
+        <path d="M 72 42 Q 75 47 78 42" class="ldr-acc-stroke ldr-filament" stroke-width="0.8"/>
+        <!-- spark rays -->
+        <line x1="60" y1="36" x2="64" y2="38" class="ldr-acc-stroke" stroke-width="0.9"/>
+        <line x1="90" y1="36" x2="86" y2="38" class="ldr-acc-stroke" stroke-width="0.9"/>
+        <line x1="75" y1="22" x2="75" y2="27" class="ldr-acc-stroke" stroke-width="0.9"/>
+        <line x1="62" y1="48" x2="65" y2="48" class="ldr-acc-stroke" stroke-width="0.9"/>
+        <line x1="88" y1="48" x2="85" y2="48" class="ldr-acc-stroke" stroke-width="0.9"/>
+      </g>
+
+      <!-- ============= GEAR (robot → human) ============= -->
+      <g class="ldr-gear" style="transform-origin: 225px 50px;">
+        <g transform="translate(225 50)">
+          <!-- outer -->
+          <circle r="9" class="ldr-acc-stroke" fill="var(--bg)" stroke-width="1.5"/>
+          <!-- inner ring -->
+          <circle r="5" class="ldr-acc-stroke" fill="none" stroke-width="0.8"/>
+          <!-- hub -->
+          <circle r="2.2" class="ldr-acc-fill"/>
+          <!-- 8 teeth -->
+          <g>
+            <rect x="-1.4" y="-12.5" width="2.8" height="3.8" class="ldr-acc-fill"/>
+            <rect x="-1.4" y="8.7" width="2.8" height="3.8" class="ldr-acc-fill"/>
+            <rect x="-12.5" y="-1.4" width="3.8" height="2.8" class="ldr-acc-fill"/>
+            <rect x="8.7" y="-1.4" width="3.8" height="2.8" class="ldr-acc-fill"/>
+          </g>
+          <g transform="rotate(45)">
+            <rect x="-1.4" y="-12.5" width="2.8" height="3.8" class="ldr-acc-fill"/>
+            <rect x="-1.4" y="8.7" width="2.8" height="3.8" class="ldr-acc-fill"/>
+            <rect x="-12.5" y="-1.4" width="3.8" height="2.8" class="ldr-acc-fill"/>
+            <rect x="8.7" y="-1.4" width="3.8" height="2.8" class="ldr-acc-fill"/>
+          </g>
+        </g>
+      </g>
+    </svg>
+    <div class="loader-caption">reliable · understanding</div>
+  </div>
+  <div class="loader-skip">click or press any key to skip</div>
+</div>
+
+<script>
+(function(){
+  var loader = document.getElementById('site-loader');
+  if (!loader) return;
+
+  // plays every refresh — no session gating
+  // fade out after animation completes (~10s)
+  setTimeout(function(){
+    loader.classList.add('is-done');
+    setTimeout(function(){ loader.classList.add('is-hidden'); }, 900);
+  }, 6000);
+
+  // click / tap / key anywhere to skip
+  function skip(){
+    loader.classList.add('is-done');
+    setTimeout(function(){ loader.classList.add('is-hidden'); }, 400);
+    document.removeEventListener('click', skip);
+    document.removeEventListener('keydown', skip);
+    document.removeEventListener('touchstart', skip);
+  }
+  document.addEventListener('click', skip);
+  document.addEventListener('keydown', skip);
+  document.addEventListener('touchstart', skip);
+})();
+</script>
+
+<div data-nav="about"></div>
+
+<main class="wrap">
+
+  <section class="hero" id="hero">
+    <div>
+      <h1>Zhaoxin Feng <span class="nickname">(Betty)</span></h1>
+      <p class="role">PhD Student</p>
+      <p class="affil">
+        Department of Language Science and Technology<br>
+        <a href="https://www.polyu.edu.hk/" target="_blank" rel="noopener">The Hong Kong Polytechnic University</a>
+      </p>
+
+      <div class="contacts">
+        <span class="email-plain" title="email">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16v12H4z"/><path d="m4 7 8 6 8-6"/></svg>
+          zhaoxinbetty.feng@connect.polyu.hk
+        </span>
+        <a href="https://scholar.google.com/citations?user=BTvcwS8AAAAJ&hl=en&oi=ao" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M5.242 13.769 0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.547 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/></svg>
+          scholar
+        </a>
+        <a href="https://www.linkedin.com/in/zhaoxin-feng-60a345310/" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3A2 2 0 0 1 21 5v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14zM8.3 18V10H5.7v8h2.6zM7 8.7a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zM18.3 18v-4.4c0-2.3-1.2-3.4-2.9-3.4-1.3 0-1.9.7-2.3 1.2V10h-2.6v8h2.6v-4.3c0-.3 0-.6.1-.8.2-.5.7-1.1 1.6-1.1 1.1 0 1.6.8 1.6 2V18h2.9z"/></svg>
+          linkedin
+        </a>
+
+      </div>
+    </div>
+
+    <div class="hero-photo">
+      <img src="assets/zhaoxin.jpg?v=2" alt="Zhaoxin Feng"
+           onerror="this.outerHTML='<div class=&quot;photo-placeholder&quot;><span>zhaoxin.jpg</span></div>'">
+      <div class="caption">— Beijing, 2024</div>
+    </div>
+  </section>
+
+  <section id="overview">
+    <h2 class="sec">Hello there</h2>
+    <p class="body-text">
+      I am a second-year PhD student at <a href="https://www.polyu.edu.hk/" target="_blank" rel="noopener">The Hong Kong Polytechnic University</a>, advised by Prof. <a href="https://scholar.google.com/citations?user=_W8e_r8AAAAJ&hl=en" target="_blank" rel="noopener">Emmanuele Chersoni</a> and co-advised by Prof. <a href="https://scholar.google.com/citations?hl=en&amp;user=zP4DNqgAAAAJ" target="_blank" rel="noopener">Huang Chu-Ren</a>. I received my B.Sc. in Educational Technology (minor in Data Science) from <a href="https://english.bnu.edu.cn/" target="_blank" rel="noopener">Beijing Normal University</a> in 2024.
+    </p>
+
+    <p class="pull">
+      My research asks two connected questions: do LLMs truly understand human language, and can we rely on them when they interact with humans?
+    </p>
+
+    <p class="body-text">
+      In practice, my work splits into two threads. First, I probe how LLMs represent human language: whether enabling bidirectional attention in autoregressive LLMs reshapes their lexical <strong>semantic representations</strong>, and how their embeddings compare to human mental lexicon judgments. Second, I study the <strong>reliability</strong> of LLMs and LLM-based agents when interacting with humans, from sycophancy that chain-of-thought reasoning both mitigates and masks, to memory agents that can recall user preferences but fail to act on them, to reasoning failures on Chinese phonological ambiguities, etc.
+    </p>
+  </section>
+
+<section id="misc-links" class="body-text">
+    <h2 class="sec">More</h2>
+    <p>
+      See <a href="publications.html" target="_blank" rel="noopener">publications</a>, a longer-form <a href="cv.html" target="_blank" rel="noopener">CV</a>, or a few <a href="misc.html" target="_blank" rel="noopener">travels & personal notes</a>. If you want to reach me about research, collaboration, or just to say hi, email is best.
+    </p>
+  </section>
+
+</main>
+
+<footer>
+  <div class="sig">— Zhaoxin</div>
+  <div>&copy; <span data-year></span> · last tended <span id="last-upd">April 2026</span></div>
+</footer>
+
+<script src="assets/site.js?v=6"></script>
+</body>
+</html>
